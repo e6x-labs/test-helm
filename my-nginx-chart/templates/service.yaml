@@ -3,13 +3,14 @@ kind: Service
 metadata:
   name: {{ include "my-nginx-chart.fullname" . }}
   labels:
-    {{- include "my-nginx-chart.labels" . | nindent 4 }}
+    app: {{ include "my-nginx-chart.name" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: http
+      port: {{ .Values.service.port }}
       protocol: TCP
-      name: http
+      targetPort: http
   selector:
-    {{- include "my-nginx-chart.selectorLabels" . | nindent 4 }}
+    app: {{ include "my-nginx-chart.name" . }}
+
